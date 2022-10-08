@@ -1,0 +1,24 @@
+<% layout('layouts/boilerplate')%>
+<div class="row">
+    <h1 class="text-center">New Thing</h1>
+    <div class="col-6 offset-3">
+        <form action="/things" method="POST" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label class="form-label" for="item1">Item 1</label>
+                <input class="form-control" type="text" id="item1" name="thing[item1]" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="item2">Item 2</label>
+                <input class="form-control" type="text" id="item2" name="thing[item2]" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="item3">Item 3</label>
+                <input class="form-control" type="text" id="item3" name="thing[item3]" required>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-success">Add New Thing</button>
+            </div>
+        </form>
+        <a href="/">Back to Home</a>
+    </div>
+</div>
