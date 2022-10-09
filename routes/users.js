@@ -43,7 +43,7 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
   req.flash('success', 'Welcome back');
   const redirectUrl = req.session.returnTo || '/';
   delete req.session.returnTo;
-  res.redirect('/');
+  res.redirect(redirectUrl);
 });
 
 /* GET logout user page. */
@@ -54,5 +54,40 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
   });
 });
+
+
+
+
+
+
+
+/* GET Render thing using id page */
+router.get('/:id', catchAsync(async (req, res, next) => { 
+	const user = await User.findById(req.params.id);
+	res.render('users/show', { user });
+}));
+  
+/* GET Render thing edit page (if no things exist, redirect to home */
+  router.get('/:id/edit', catchAsync(async (req, res, next) => {
+	const user = await User.findById(req.params.id);
+	if(!user) {
+	  res.redirect('/');
+	}
+	res.render('users/edit', { user });
+}));
+  
+/* PUT submit thing edit to database and redirect to the index page */
+  router.put('/:id/edit', catchAsync(async (req, res, next) => {
+	const { id } = req.params;
+	const thing = await User.findByIdAndUpdate(id, { ...req.body.user });
+	res.redirect('/users/index')
+}));
+  
+/* DELETE Delete thing and redirect to the index page */
+  router.delete('/:id', catchAsync(async (req, res, next) => {
+	const { id } = req.params;
+	await User.findByIdAndDelete(id);
+	res.redirect('/users/index');
+}));
 
 module.exports = router;
